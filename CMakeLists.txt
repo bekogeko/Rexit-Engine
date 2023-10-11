@@ -27,7 +27,6 @@ set(PROJECT_SOURCES
 
 add_subdirectory(${PROJECT_DIR}/vendor/glfw)
 add_subdirectory(${PROJECT_DIR}/vendor/glm)
-add_subdirectory(${PROJECT_DIR}/vendor/glad/cmake)
 
 
 include_directories(${PROJECT_INCLUDE_DIR})
