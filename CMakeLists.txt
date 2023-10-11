@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
+set(CMAKE_CXX_STANDARD 17)
+
 
 # set the project name
 project(Rexit)
@@ -23,7 +25,8 @@ set(PROJECT_SOURCES
 #     ${PROJECT_INCLUDE_DIR}/lib.h
 # )
 
-
+# require OpenGL
+find_package(OpenGL REQUIRED)
 
 add_subdirectory(${PROJECT_DIR}/vendor/glfw)
 add_subdirectory(${PROJECT_DIR}/vendor/glm)
