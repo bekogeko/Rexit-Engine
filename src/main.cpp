@@ -15,8 +15,6 @@ int main()
   }
 
   GLFWwindow *window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-  glm::mat4 matrix;
-
   if (window == NULL)
   {
     std::cout << "Error: GLFW window could not be created" << std::endl;
@@ -25,6 +23,12 @@ int main()
   }
 
   glfwMakeContextCurrent(window);
+
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+  {
+    std::cout << "Error: GLAD could not be initialized" << std::endl;
+    return -1;
+  }
 
   while (!glfwWindowShouldClose(window))
   {
