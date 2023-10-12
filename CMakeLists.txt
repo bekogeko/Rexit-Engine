@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 # set the project name
-project(Rexit)
+project(RexitSandbox VERSION 0.1.0)
 
 # set the project directory
 set(PROJECT_DIR ${CMAKE_SOURCE_DIR})
@@ -17,24 +17,23 @@ set(PROJECT_SOURCES
     ${PROJECT_SOURCE_DIR}/main.cpp
     ${PROJECT_SOURCE_DIR}/lib.cpp
     ${PROJECT_SOURCE_DIR}/glad.c
-# Headers
-    ${PROJECT_INCLUDE_DIR}/lib.h
     )
 
-# set(PROJECT_HEADERS
-#     ${PROJECT_INCLUDE_DIR}/lib.h
-# )
+set(PROJECT_HEADERS
+    ${PROJECT_INCLUDE_DIR}/lib.h
+)
 
 # require OpenGL
 find_package(OpenGL REQUIRED)
 
 add_subdirectory(${PROJECT_DIR}/vendor/glfw)
 add_subdirectory(${PROJECT_DIR}/vendor/glm)
+add_subdirectory(${PROJECT_DIR}/Engine)
 
+add_executable(${PROJECT_NAME})
+include_directories(${PROJECT_INCLUDE_DIR} ${PROJECT_DIR}/vendor/glfw/include ${PROJECT_DIR}/vendor/glm ${PROJECT_DIR}/Engine/include)
 
-include_directories(${PROJECT_INCLUDE_DIR})
+target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCES} ${PROJECT_HEADERS})
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw glm PUBLIC Rexit-Engine OpenGL::GL)
 
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
-
-target_link_libraries(${PROJECT_NAME} glfw glm)
 

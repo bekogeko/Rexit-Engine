@@ -5,17 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "(lldb) Launch",
+      "name": "(lldb) Launch Sandbox",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/Rexit",
+      "program": "${workspaceFolder}/build/RexitSandbox",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
       "externalConsole": true,
       "MIMode": "lldb",
-      "preLaunchTask": "Make"
+      "preLaunchTask": "Make Sandbox"
     }
   ]
 }

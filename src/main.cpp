@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/mat4x4.hpp>
 
+#include <Rexit.h>
 #include "lib.h"
 
 auto vertexShaderSource = "#version 330 core\n"
@@ -32,6 +33,7 @@ unsigned int program, vertexShader, fragmentShader;
 int main()
 {
   std::cout << "Hello World" << std::endl;
+  PrintShader();
 
   if (!glfwInit())
   {

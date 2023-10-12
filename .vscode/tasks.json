@@ -2,7 +2,20 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "CMake",
+      "label": "CMake Engine",
+      "type": "shell",
+      "command": "cmake",
+      "options": {
+        "cwd": "${workspaceFolder}/Engine/build"
+      },
+      "args": ["${workspaceFolder}/engine"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "CMake Sandbox",
       "type": "shell",
       "command": "cmake",
       "options": {
@@ -15,7 +28,15 @@
       }
     },
     {
-      "label": "Make",
+      "label": "Make Engine",
+      "type": "shell",
+      "command": "make",
+      "options": {
+        "cwd": "${workspaceFolder}/Engine/build"
+      }
+    },
+    {
+      "label": "Make Sandbox",
       "type": "shell",
       "command": "make",
       "options": {
