@@ -9,7 +9,9 @@ namespace Rexit
   ShaderProgram::ShaderProgram()
   {
     m_ProgramId = glCreateProgram();
+    m_UniformLocations = std::map<std::string, int>();
   }
+
   ShaderProgram::~ShaderProgram()
   {
     glDeleteProgram(m_ProgramId);
@@ -18,6 +20,16 @@ namespace Rexit
   void ShaderProgram::LinkProgram()
   {
     glLinkProgram(m_ProgramId);
+
+    // Check for linking errors
+    int success;
+    char infoLog[512];
+    glGetProgramiv(m_ProgramId, GL_LINK_STATUS, &success);
+    if (!success)
+    {
+      glGetProgramInfoLog(m_ProgramId, 512, NULL, infoLog);
+      printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
+    }
   }
 
   void ShaderProgram::Use()
@@ -70,6 +82,23 @@ namespace Rexit
     }
 
     return shaderSource;
+  }
+
+  void ShaderProgram::SetUniformFloat(const std::string &uniformName, float value)
+  {
+    // Check if uniform location is already cached
+    if (m_UniformLocations.find(uniformName) == m_UniformLocations.end())
+    {
+      // If not, get uniform location and cache it
+      int uniformLocation = glGetUniformLocation(m_ProgramId, uniformName.c_str());
+      m_UniformLocations[uniformName] = uniformLocation;
+    }
+
+    // Get uniform location from cache
+    int uniformLocation = m_UniformLocations[uniformName];
+
+    // Set uniform value
+    glUniform1f(uniformLocation, value);
   }
 
 } // namespace Rexit

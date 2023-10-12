@@ -49,9 +49,11 @@ int main()
   // Create vertex shader
   Rexit::ShaderProgram shaderProgram;
 
+  // Attach shaders
   shaderProgram.AttachShader("./shaders/simple.vs.glsl", Rexit::ShaderType::VERTEX);
   shaderProgram.AttachShader("./shaders/simple.fs.glsl", Rexit::ShaderType::FRAGMENT);
 
+  // Link Shader program
   shaderProgram.LinkProgram();
 
   glGenVertexArrays(1, &VAO);
@@ -74,6 +76,9 @@ int main()
 
     // // render the triangle
     shaderProgram.Use();
+
+    shaderProgram.SetUniformFloat("u_Color", 0.5f);
+
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -81,6 +86,8 @@ int main()
 
     glfwPollEvents();
   }
+
+  glfwTerminate();
 
   return 0;
 }
