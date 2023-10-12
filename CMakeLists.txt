@@ -21,24 +21,22 @@ set(PROJECT_HEADERS
     # ${PROJECT_INCLUDE_DIR}/lib.h
 )
 
-# require OpenGL
-find_package(OpenGL REQUIRED)
-
 add_subdirectory(${PROJECT_DIR}/Engine)
 
 # Instead of GLFW we should use our own windowing library
-# or a custom wrapper around GLFW
 add_subdirectory(${PROJECT_DIR}/vendor/glfw)
+
 
 # Instead of GLM we should use our own math library
 # or a custom wrapper around GLM
 add_subdirectory(${PROJECT_DIR}/vendor/glm)
 
 
+
 add_executable(${PROJECT_NAME})
 include_directories(${PROJECT_INCLUDE_DIR} ${PROJECT_DIR}/vendor/glfw/include ${PROJECT_DIR}/vendor/glm ${PROJECT_DIR}/Engine/include)
 
 target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCES} ${PROJECT_HEADERS})
-target_link_libraries(${PROJECT_NAME} PRIVATE glfw glm PUBLIC Rexit-Engine OpenGL::GL)
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw glm PUBLIC Rexit-Engine)
 
 

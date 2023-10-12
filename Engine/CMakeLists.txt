@@ -3,6 +3,11 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(Rexit-Engine CXX)
 
+
+find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(glm REQUIRED)
+
 # set the project include and source directories
 set(PROJECT_INCLUDE_DIR ${PROJECT_DIR}/include)
 set(PROJECT_SOURCE_DIR ${PROJECT_DIR}/src)
@@ -12,6 +17,7 @@ set(PROJECT_SOURCE_DIR ${PROJECT_DIR}/src)
 set(PROJECT_SOURCES 
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Shader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Window.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/glad.c
     )
 
@@ -27,9 +33,6 @@ set(PROJECT_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KHR/khrplatform.h
 )
 
-find_package(OpenGL REQUIRED)
-find_package(glfw3 REQUIRED)
-find_package(glm REQUIRED)
 
 add_library(Rexit-Engine STATIC) 
 
@@ -43,3 +46,9 @@ target_sources(Rexit-Engine
   PUBLIC
     ${PROJECT_HEADERS}
 )
+target_link_libraries(Rexit-Engine
+  PUBLIC
+    glfw
+    glm
+    OpenGL::GL
+    )
