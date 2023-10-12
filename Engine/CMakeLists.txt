@@ -20,6 +20,7 @@ set(PROJECT_HEADERS
   PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Rexit.h 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Shader.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Window.h
 
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/glad/glad.h

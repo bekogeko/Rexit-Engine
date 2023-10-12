@@ -14,37 +14,13 @@ float vertices[] = {
 
 // VAO and VBO
 unsigned int VAO, VBO;
-unsigned int program, vertexShader, fragmentShader;
 
 int main()
 {
   std::cout << "Hello World" << std::endl;
 
-  if (!glfwInit())
-  {
-    std::cout << "Error: GLFW could not be initialized" << std::endl;
-    return -1;
-  }
-  // Required for Mac OS X (At least on my machine)
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-  GLFWwindow *window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-  if (window == NULL)
-  {
-    std::cout << "Error: GLFW window could not be created" << std::endl;
-    glfwTerminate();
-    return -1;
-  }
-
-  glfwMakeContextCurrent(window);
-
-  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-  {
-    std::cout << "Error: GLAD could not be initialized" << std::endl;
-    return -1;
-  }
+  // Create window object
+  Rexit::Window window(640, 480, "Hello World");
 
   // Create vertex shader
   Rexit::ShaderProgram shaderProgram;
@@ -68,9 +44,8 @@ int main()
 
   glEnableVertexAttribArray(0);
 
-  while (!glfwWindowShouldClose(window))
+  while (!window.ShouldClose())
   {
-
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -82,12 +57,10 @@ int main()
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glfwSwapBuffers(window);
+    window.SwapBuffers();
 
-    glfwPollEvents();
+    window.PollEvents();
   }
-
-  glfwTerminate();
 
   return 0;
 }
