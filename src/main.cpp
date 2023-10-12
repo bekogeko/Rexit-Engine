@@ -5,20 +5,6 @@
 #include <glm/mat4x4.hpp>
 
 #include <Rexit.h>
-#include "lib.h"
-
-auto vertexShaderSource = "#version 330 core\n"
-                          "layout (location = 0) in vec3 aPos;\n"
-                          "void main()\n"
-                          "{\n"
-                          "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                          "}\0";
-auto fragmentShaderSource = "#version 330 core\n"
-                            "out vec4 FragColor;\n"
-                            "void main()\n"
-                            "{\n"
-                            "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                            "}\n\0";
 
 float vertices[] = {
     -0.5f, -0.5f, 0.0f, // left
@@ -33,7 +19,6 @@ unsigned int program, vertexShader, fragmentShader;
 int main()
 {
   std::cout << "Hello World" << std::endl;
-  PrintShader();
 
   if (!glfwInit())
   {
@@ -61,27 +46,13 @@ int main()
     return -1;
   }
 
-  // Shader program to
-  // 1. Compile vertex and fragment shaders
-  // 2. Link compiled shaders
-  // 3. Delete compiled shaders
-  program = glCreateProgram();
-  vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+  // Create vertex shader
+  Rexit::ShaderProgram shaderProgram;
 
-  glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-  glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+  shaderProgram.AttachShader("./shaders/simple.vs.glsl", Rexit::ShaderType::VERTEX);
+  shaderProgram.AttachShader("./shaders/simple.fs.glsl", Rexit::ShaderType::FRAGMENT);
 
-  glCompileShader(vertexShader);
-  glCompileShader(fragmentShader);
-
-  glAttachShader(program, vertexShader);
-  glAttachShader(program, fragmentShader);
-
-  glLinkProgram(program);
-
-  glDeleteShader(vertexShader);
-  glDeleteShader(fragmentShader);
+  shaderProgram.LinkProgram();
 
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
@@ -102,7 +73,7 @@ int main()
     glClear(GL_COLOR_BUFFER_BIT);
 
     // // render the triangle
-    glUseProgram(program);
+    shaderProgram.Use();
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 

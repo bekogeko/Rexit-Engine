@@ -15,20 +15,25 @@ set(PROJECT_SOURCE_DIR ${PROJECT_DIR}/src)
 
 set(PROJECT_SOURCES
     ${PROJECT_SOURCE_DIR}/main.cpp
-    ${PROJECT_SOURCE_DIR}/lib.cpp
-    ${PROJECT_SOURCE_DIR}/glad.c
     )
 
 set(PROJECT_HEADERS
-    ${PROJECT_INCLUDE_DIR}/lib.h
+    # ${PROJECT_INCLUDE_DIR}/lib.h
 )
 
 # require OpenGL
 find_package(OpenGL REQUIRED)
 
-add_subdirectory(${PROJECT_DIR}/vendor/glfw)
-add_subdirectory(${PROJECT_DIR}/vendor/glm)
 add_subdirectory(${PROJECT_DIR}/Engine)
+
+# Instead of GLFW we should use our own windowing library
+# or a custom wrapper around GLFW
+add_subdirectory(${PROJECT_DIR}/vendor/glfw)
+
+# Instead of GLM we should use our own math library
+# or a custom wrapper around GLM
+add_subdirectory(${PROJECT_DIR}/vendor/glm)
+
 
 add_executable(${PROJECT_NAME})
 include_directories(${PROJECT_INCLUDE_DIR} ${PROJECT_DIR}/vendor/glfw/include ${PROJECT_DIR}/vendor/glm ${PROJECT_DIR}/Engine/include)
