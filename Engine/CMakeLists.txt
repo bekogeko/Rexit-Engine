@@ -9,43 +9,45 @@ find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
 
 # set the project include and source directories
-set(PROJECT_INCLUDE_DIR ${PROJECT_DIR}/include)
-set(PROJECT_SOURCE_DIR ${PROJECT_DIR}/src)
+set(PROJECT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 
 # Set Source Files
 set(PROJECT_SOURCES 
-  PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Shader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Window.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/glad.c
+  PUBLIC
+    ${PROJECT_SOURCE_DIR}/Shader.cpp
+    ${PROJECT_SOURCE_DIR}/Window.cpp
+    ${PROJECT_SOURCE_DIR}/Application.cpp
+    ${PROJECT_SOURCE_DIR}/glad.c
     )
 
 
 set(PROJECT_HEADERS 
   PUBLIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Rexit.h 
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Shader.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Window.h
+    ${PROJECT_INCLUDE_DIR}/Rexit.h 
+    ${PROJECT_INCLUDE_DIR}/Shader.h
+    ${PROJECT_INCLUDE_DIR}/EntryPoint.h
+    ${PROJECT_INCLUDE_DIR}/Application.h
+    ${PROJECT_INCLUDE_DIR}/Window.h
 
   PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/glad/glad.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/KHR/khrplatform.h
+    ${PROJECT_INCLUDE_DIR}/glad/glad.h
+    ${PROJECT_INCLUDE_DIR}/KHR/khrplatform.h
 )
 
 
 add_library(Rexit-Engine STATIC) 
 
-
-# set_target_properties(Rexit-Engine PROPERTIES LINKER_LANGUAGE CXX)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 target_sources(Rexit-Engine
-  PRIVATE
-    ${PROJECT_SOURCES}
   PUBLIC
     ${PROJECT_HEADERS}
-)
+  PRIVATE
+    ${PROJECT_SOURCES})
+
+include_directories(${PROJECT_INCLUDE_DIR})
+
+
 target_link_libraries(Rexit-Engine
   PUBLIC
     glfw

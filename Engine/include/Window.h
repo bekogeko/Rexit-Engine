@@ -12,6 +12,7 @@ namespace Rexit
     ~Window();
 
     bool ShouldClose();
+    void MakeContextCurrent();
 
     void SwapBuffers();
     void PollEvents();

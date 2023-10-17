@@ -13,54 +13,47 @@ float vertices[] = {
 };
 
 // VAO and VBO
-unsigned int VAO, VBO;
 
-int main()
+class Sandbox : public Rexit::Application
 {
-  std::cout << "Hello World" << std::endl;
-
-  // Create window object
-  Rexit::Window window(640, 480, "Hello World");
-
-  // Create vertex shader
+private:
+  unsigned int VAO, VBO;
   Rexit::ShaderProgram shaderProgram;
 
-  // Attach shaders
-  shaderProgram.AttachShader("./shaders/simple.vs.glsl", Rexit::ShaderType::VERTEX);
-  shaderProgram.AttachShader("./shaders/simple.fs.glsl", Rexit::ShaderType::FRAGMENT);
+public:
+  Sandbox() : Rexit::Application(640, 480, "Hello World") {}
 
-  // Link Shader program
-  shaderProgram.LinkProgram();
-
-  glGenVertexArrays(1, &VAO);
-  glGenBuffers(1, &VBO);
-
-  // Bind VAO and VBO
-  glBindVertexArray(VAO);
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-
-  glEnableVertexAttribArray(0);
-
-  while (!window.ShouldClose())
+  ~Sandbox()
   {
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
 
-    // // render the triangle
-    shaderProgram.Use();
-
-    shaderProgram.SetUniformFloat("u_Color", 0.5f);
-
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
-    window.SwapBuffers();
-
-    window.PollEvents();
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
   }
 
-  return 0;
+  void Startup() override
+  {
+    shaderProgram.AttachShader("./shaders/simple.vs.glsl", Rexit::ShaderType::VERTEX);
+    shaderProgram.AttachShader("./shaders/simple.fs.glsl", Rexit::ShaderType::FRAGMENT);
+    shaderProgram.LinkProgram();
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    // Bind VAO and VBO
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
+  }
+  void Update() override
+  {
+    shaderProgram.Use();
+    shaderProgram.SetUniformFloat("u_Color", 0.5f);
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+  }
+};
+
+Rexit::Application *Rexit::CreateApplication()
+{
+  return new Sandbox();
 }

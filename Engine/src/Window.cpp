@@ -52,4 +52,9 @@ namespace Rexit
     glfwSwapBuffers(m_Window);
   }
 
+  void Window::MakeContextCurrent()
+  {
+    glfwMakeContextCurrent(m_Window);
+  }
+
 } // namespace Rexit
